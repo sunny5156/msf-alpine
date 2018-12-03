@@ -44,11 +44,11 @@ RUN apk upgrade --update \
 #	&& echo '@community http://mirrors.aliyun.com/alpine/latest-stable/community' >> /etc/apk/repositories \
 #	&& echo '@testing http://mirrors.aliyun.com/alpine/edge/testing' >> /etc/apk/repositories
 	
-RUN echo 'http://mirrors.aliyun.com/alpine/v3.8/main' > /etc/apk/repositories 
+RUN echo 'http://mirrors.aliyun.com/alpine/v3.8/main' > /etc/apk/repositories \
+	&& echo 'http://mirrors.aliyun.com/alpine/latest-stable/community' >> /etc/apk/repositories 
 RUN apk add python supervisor
 	
-RUN  echo 'http://mirrors.aliyun.com/alpine/latest-stable/community' >> /etc/apk/repositories \
-  apk --update add \
+RUN  apk --update add \
 			  php7-dev \
 			  php7-pear \
 			  php7-fpm \
