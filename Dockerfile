@@ -14,7 +14,7 @@ ENV SRC_DIR ${WORKER}/src
 RUN mkdir -p  /data/db ${WORKER}/data ${SRC_DIR}
 
 RUN apk upgrade --update \
-    && apk add curl bash tzdata openssh gcc \
+    && apk add linux-headers curl bash tzdata openssh gcc g++ make \
     && ln -sf /usr/share/zoneinfo/${TZ} /etc/localtime \
     && echo ${TZ} > /etc/timezone \
     && sed -i s/#PermitRootLogin.*/PermitRootLogin\ yes/ /etc/ssh/sshd_config \
@@ -44,7 +44,7 @@ RUN apk upgrade --update \
 #	&& echo '@community http://mirrors.aliyun.com/alpine/latest-stable/community' >> /etc/apk/repositories \
 #	&& echo '@testing http://mirrors.aliyun.com/alpine/edge/testing' >> /etc/apk/repositories
 	
-RUN echo 'http://mirrors.aliyun.com/alpine/latest-stable/main' >> /etc/apk/repositories \ 
+RUN echo 'http://mirrors.aliyun.com/alpine/v3.8/main' > /etc/apk/repositories \ 
   echo 'http://mirrors.aliyun.com/alpine/latest-stable/community' >> /etc/apk/repositories \
   apk --update add \
   php7-fpm \
@@ -88,10 +88,12 @@ RUN echo 'http://mirrors.aliyun.com/alpine/latest-stable/main' >> /etc/apk/repos
   php7-xmlwriter \
   php7-zip 
   
-RUN apk add python supervisor
+RUN apk --update add python supervisor
 
-RUN echo -e "#!/bin/bash\n/usr/sbin/sshd -D \nnohup supervisord -c /worker/supervisor/supervisord.conf" >>/etc/start.sh
+ADD ./config/supervisor.conf /etc/
+
+RUN echo -e "#!/bin/bash\n/usr/sbin/sshd -D \nnohup supervisord -c /etc/supervisor.conf" >>/etc/start.sh
 
 RUN mkdir -p /var/log/supervisor
 EXPOSE 80 8000 9000
-#CMD ["/etc/start.sh"]
+CMD ["/etc/start.sh"]
