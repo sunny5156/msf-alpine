@@ -40,9 +40,11 @@ RUN apk upgrade --update \
 #    && ln -s /usr/local/bin/lsz /usr/bin/sz
 
 
-RUN echo 'http://mirrors.aliyun.com/alpine/latest-stable/main' > /etc/apk/repositories \
-	&& echo '@community http://mirrors.aliyun.com/alpine/latest-stable/community' >> /etc/apk/repositories \
-	&& echo '@testing http://mirrors.aliyun.com/alpine/edge/testing' >> /etc/apk/repositories
+#RUN echo 'http://mirrors.aliyun.com/alpine/latest-stable/main' > /etc/apk/repositories \
+#	&& echo '@community http://mirrors.aliyun.com/alpine/latest-stable/community' >> /etc/apk/repositories \
+#	&& echo '@testing http://mirrors.aliyun.com/alpine/edge/testing' >> /etc/apk/repositories
+	
+RUN   echo 'http://mirrors.aliyun.com/alpine/latest-stable/community' >> /etc/apk/repositories \
   apk --update add \
   php7-fpm \
   php7-pdo \
