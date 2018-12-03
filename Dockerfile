@@ -44,8 +44,10 @@ RUN apk upgrade --update \
 #	&& echo '@community http://mirrors.aliyun.com/alpine/latest-stable/community' >> /etc/apk/repositories \
 #	&& echo '@testing http://mirrors.aliyun.com/alpine/edge/testing' >> /etc/apk/repositories
 	
-RUN echo 'http://mirrors.aliyun.com/alpine/v3.8/main' > /etc/apk/repositories \ 
-  echo 'http://mirrors.aliyun.com/alpine/latest-stable/community' >> /etc/apk/repositories \
+RUN echo 'http://mirrors.aliyun.com/alpine/v3.8/main' > /etc/apk/repositories 
+RUN apk add python supervisor
+	
+RUN  echo 'http://mirrors.aliyun.com/alpine/latest-stable/community' >> /etc/apk/repositories \
   apk --update add \
   php7-dev \
   php7-pear \
@@ -90,7 +92,9 @@ RUN echo 'http://mirrors.aliyun.com/alpine/v3.8/main' > /etc/apk/repositories \
   php7-xmlwriter \
   php7-zip 
   
-RUN apk  add python supervisor
+RUN pecl install swoole-1.9.22
+
+RUN echo "extension=swoole.so" > /etc/php7/conf.d/00_swoole.ini
 
 ADD ./config/supervisor.conf /etc/
 
