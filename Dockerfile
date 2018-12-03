@@ -40,7 +40,8 @@ RUN apk upgrade --update \
 #    && ln -s /usr/local/bin/lsz /usr/bin/sz
 
 
-RUN apk --update add \
+RUN echo 'http://dl-cdn.alpinelinux.org/alpine/edge/testing' >> /etc/apk/repositories && \
+  apk --update add \
   php-fpm \
   php-pdo \
   php-json \
