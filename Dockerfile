@@ -90,4 +90,4 @@ RUN echo '@main http://mirrors.aliyun.com/alpine/latest-stable/main' > /etc/apk/
   supervisor@main
 RUN mkdir -p /var/log/supervisor
 EXPOSE 80 8000 9000
-CMD ["/usr/bin/supervisord"]
+#CMD ["/usr/bin/supervisord"]
