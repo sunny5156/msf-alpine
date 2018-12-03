@@ -46,6 +46,7 @@ RUN apk upgrade --update \
 	
 RUN echo 'http://mirrors.aliyun.com/alpine/v3.8/main' > /etc/apk/repositories \
 	&& echo 'http://mirrors.aliyun.com/alpine/latest-stable/community' >> /etc/apk/repositories 
+	
 RUN apk add python supervisor
 	
 RUN  apk --update add \
