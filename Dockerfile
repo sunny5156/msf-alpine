@@ -44,7 +44,9 @@ RUN apk upgrade --update \
 #	&& echo '@community http://mirrors.aliyun.com/alpine/latest-stable/community' >> /etc/apk/repositories \
 #	&& echo '@testing http://mirrors.aliyun.com/alpine/edge/testing' >> /etc/apk/repositories
 	
-RUN apk --update add \
+RUN echo 'http://mirrors.aliyun.com/alpine/latest-stable/main' >> /etc/apk/repositories \ 
+  echo 'http://mirrors.aliyun.com/alpine/latest-stable/community' >> /etc/apk/repositories \
+  apk --update add \
   php7-fpm \
   php7-pdo \
   php7-json \
@@ -84,8 +86,7 @@ RUN apk --update add \
   php7-xml \
   php7-xmlreader \
   php7-xmlwriter \
-  php7-zip \
-  --repository http://mirrors.aliyun.com/alpine/latest-stable/community --allow-untrusted
+  php7-zip 
   
 RUN apk add python supervisor
 
