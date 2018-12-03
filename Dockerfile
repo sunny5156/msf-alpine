@@ -44,7 +44,8 @@ RUN apk upgrade --update \
 #	&& echo '@community http://mirrors.aliyun.com/alpine/latest-stable/community' >> /etc/apk/repositories \
 #	&& echo '@testing http://mirrors.aliyun.com/alpine/edge/testing' >> /etc/apk/repositories
 	
-RUN   echo 'http://mirrors.aliyun.com/alpine/latest-stable/community' >> /etc/apk/repositories \
+RUN echo '@main http://mirrors.aliyun.com/alpine/latest-stable/main' > /etc/apk/repositories \ 
+  echo 'http://mirrors.aliyun.com/alpine/latest-stable/community' >> /etc/apk/repositories \
   apk --update add \
   php7-fpm \
   php7-pdo \
@@ -86,7 +87,7 @@ RUN   echo 'http://mirrors.aliyun.com/alpine/latest-stable/community' >> /etc/ap
   php7-xmlreader \
   php7-xmlwriter \
   php7-zip \
-  supervisor
+  supervisor@main
 RUN mkdir -p /var/log/supervisor
 EXPOSE 80 8000 9000
 CMD ["/usr/bin/supervisord"]
