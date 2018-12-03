@@ -14,7 +14,7 @@ ENV SRC_DIR ${WORKER}/src
 RUN mkdir -p  /data/db ${WORKER}/data ${SRC_DIR}
 
 RUN apk upgrade --update \
-    && apk add curl bash tzdata openssh gcc c \
+    && apk add curl bash tzdata openssh gcc \
     && ln -sf /usr/share/zoneinfo/${TZ} /etc/localtime \
     && echo ${TZ} > /etc/timezone \
     && sed -i s/#PermitRootLogin.*/PermitRootLogin\ yes/ /etc/ssh/sshd_config \
