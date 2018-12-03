@@ -102,4 +102,4 @@ RUN echo -e "#!/bin/bash\n/usr/sbin/sshd -D \nnohup supervisord -c /etc/supervis
 
 RUN mkdir -p /var/log/supervisor
 EXPOSE 80 8000 9000
-CMD ["/etc/start.sh"]
+#CMD ["/bin/bash","/etc/start.sh"]
