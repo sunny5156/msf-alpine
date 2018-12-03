@@ -92,9 +92,9 @@ RUN  echo 'http://mirrors.aliyun.com/alpine/latest-stable/community' >> /etc/apk
 			  php7-xmlwriter \
 			  php7-zip 
   
-RUN pecl install swoole-1.9.22
+#RUN pecl install swoole-1.9.22
 
-RUN echo "extension=swoole.so" > /etc/php7/conf.d/00_swoole.ini
+#RUN echo "extension=swoole.so" > /etc/php7/conf.d/00_swoole.ini
 
 ADD ./config/supervisor.conf /etc/
 
