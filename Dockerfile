@@ -1,4 +1,4 @@
-FROM alpine:3.7
+FROM alpine:3.8
 
 MAINTAINER sunny5156 <sunny5156@qq.com> 
 
@@ -40,7 +40,9 @@ RUN apk upgrade --update \
 #    && ln -s /usr/local/bin/lsz /usr/bin/sz
 
 
-RUN echo 'http://dl-cdn.alpinelinux.org/alpine/edge/testing' >> /etc/apk/repositories && \
+RUN echo 'http://mirrors.aliyun.com/alpine/latest-stable/main' > /etc/apk/repositories \
+	&& echo '@community http://mirrors.aliyun.com/alpine/latest-stable/community' >> /etc/apk/repositories \
+	&& echo '@testing http://mirrors.aliyun.com/alpine/edge/testing' >> /etc/apk/repositories
   apk --update add \
   php7-fpm \
   php7-pdo \
