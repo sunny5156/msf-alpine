@@ -14,7 +14,7 @@ ENV SRC_DIR ${WORKER}/src
 RUN mkdir -p  /data/db ${WORKER}/data ${SRC_DIR}
 
 RUN apk upgrade --update \
-    && apk add linux-headers curl bash tzdata openssh gcc g++ make \
+    && apk add linux-headers curl bash tzdata openssh gcc g++ make cmake \
     && ln -sf /usr/share/zoneinfo/${TZ} /etc/localtime \
     && echo ${TZ} > /etc/timezone \
     && sed -i s/#PermitRootLogin.*/PermitRootLogin\ yes/ /etc/ssh/sshd_config \
@@ -47,6 +47,8 @@ RUN apk upgrade --update \
 RUN echo 'http://mirrors.aliyun.com/alpine/v3.8/main' > /etc/apk/repositories \ 
   echo 'http://mirrors.aliyun.com/alpine/latest-stable/community' >> /etc/apk/repositories \
   apk --update add \
+  php7-dev \
+  php7-pear \
   php7-fpm \
   php7-pdo \
   php7-json \
@@ -88,7 +90,7 @@ RUN echo 'http://mirrors.aliyun.com/alpine/v3.8/main' > /etc/apk/repositories \
   php7-xmlwriter \
   php7-zip 
   
-RUN apk --update add python supervisor
+RUN apk  add python supervisor
 
 ADD ./config/supervisor.conf /etc/
 
