@@ -50,6 +50,9 @@ RUN echo 'http://mirrors.aliyun.com/alpine/v3.8/main' > /etc/apk/repositories \
 RUN apk add python supervisor
 	
 RUN  apk --update add \
+              php7-amqp \
+              php7-redis \
+              php7-mongodb \
               php7-dev \
               php7-pear \
               php7-fpm \
@@ -74,6 +77,7 @@ RUN  apk --update add \
               php7-json \
               php7-mbstring \
               php7-mcrypt \
+              php7-mysqli \
               php7-mysqlnd \
               php7-opcache \
               php7-openssl \
@@ -92,14 +96,14 @@ RUN  apk --update add \
               php7-xmlwriter \
               php7-zip 
   
-#RUN pecl install swoole-1.9.22
+RUN pecl install swoole-1.9.22 >/dev/null
 
-#RUN echo "extension=swoole.so" > /etc/php7/conf.d/00_swoole.ini
+RUN echo 'extension=swoole.so' > /etc/php7/conf.d/00_swoole.ini
 
 ADD ./config/supervisor.conf /etc/
 
-RUN echo -e "#!/bin/bash\n/usr/sbin/sshd -D \nnohup supervisord -c /etc/supervisor.conf" >>/etc/start.sh
+RUN echo -e '#!/bin/bash\n/usr/sbin/sshd -D \n supervisord -c /etc/supervisor.conf' >>/etc/start.sh
 
 RUN mkdir -p /var/log/supervisor
 EXPOSE 80 8000 9000
-#CMD ["/bin/bash","/etc/start.sh"]
+CMD ["/bin/bash","/etc/start.sh"]
