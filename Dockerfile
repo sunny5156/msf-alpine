@@ -101,8 +101,9 @@ RUN pecl install swoole-1.9.22 >/dev/null
 RUN echo 'extension=swoole.so' > /etc/php7/conf.d/00_swoole.ini
 
 ADD ./config/supervisor.conf /etc/
+ADD ./config/supervisor.d  /etc/
 
-RUN echo -e '#!/bin/bash\n/usr/sbin/sshd -D \n supervisord -c /etc/supervisor.conf' >>/etc/start.sh
+RUN echo -e '#!/bin/bash\nsupervisord -c /etc/supervisor.conf \n/usr/sbin/sshd -D ' >>/etc/start.sh
 
 RUN mkdir -p /var/log/supervisor
 EXPOSE 80 8000 9000
