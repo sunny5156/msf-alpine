@@ -2,7 +2,7 @@ FROM alpine:3.8
 
 MAINTAINER sunny5156 <sunny5156@qq.com> 
 
-#RUN echo "https://mirror.tuna.tsinghua.edu.cn/alpine/v3.7/main" > /etc/apk/repositories
+#RUN echo "https://mirror.tuna.tsinghua.edu.cn/alpine/v3.8/main" > /etc/apk/repositories
 
 ARG TZ="Asia/Shanghai"
 
@@ -11,10 +11,10 @@ ENV TZ ${TZ}
 ENV WORKER /worker
 ENV SRC_DIR ${WORKER}/src
 
-RUN mkdir -p  /data/db ${WORKER}/data ${SRC_DIR}
+RUN mkdir -p  /data/db ${WORKER}/data ${SRC_DIR} /etc/supervisor.d/
 
 RUN apk upgrade --update \
-    && apk add linux-headers curl bash tzdata openssh gcc g++ make cmake \
+    && apk add linux-headers curl bash tzdata openssh gcc g++ make cmake htop \
     && ln -sf /usr/share/zoneinfo/${TZ} /etc/localtime \
     && echo ${TZ} > /etc/timezone \
     && sed -i s/#PermitRootLogin.*/PermitRootLogin\ yes/ /etc/ssh/sshd_config \
@@ -44,8 +44,8 @@ RUN apk upgrade --update \
 #	&& echo '@community http://mirrors.aliyun.com/alpine/latest-stable/community' >> /etc/apk/repositories \
 #	&& echo '@testing http://mirrors.aliyun.com/alpine/edge/testing' >> /etc/apk/repositories
 	
-RUN echo 'http://mirrors.aliyun.com/alpine/v3.8/main' > /etc/apk/repositories \
-	&& echo 'http://mirrors.aliyun.com/alpine/latest-stable/community' >> /etc/apk/repositories 
+#RUN echo 'http://mirrors.aliyun.com/alpine/v3.8/main' > /etc/apk/repositories \
+#	&& echo 'http://mirrors.aliyun.com/alpine/latest-stable/community' >> /etc/apk/repositories 
 	
 RUN apk add python supervisor
 	
@@ -96,12 +96,12 @@ RUN  apk --update add \
               php7-xmlwriter \
               php7-zip 
   
-RUN pecl install swoole-1.9.22 >/dev/null
+#RUN pecl install swoole-1.9.22 >/dev/null
 
-RUN echo 'extension=swoole.so' > /etc/php7/conf.d/00_swoole.ini
+#RUN echo 'extension=swoole.so' > /etc/php7/conf.d/00_swoole.ini
 
 ADD ./config/supervisor.conf /etc/
-ADD ./config/supervisor.d  /etc/
+ADD ./config/supervisor.d  /etc/supervisor.d/
 
 RUN echo -e '#!/bin/bash\nsupervisord -c /etc/supervisor.conf \n/usr/sbin/sshd -D ' >>/etc/start.sh
 
