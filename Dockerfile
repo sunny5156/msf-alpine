@@ -1,4 +1,4 @@
-FROM alpine:3.8
+FROM alpine:3.9
 
 MAINTAINER sunny5156 <sunny5156@qq.com> 
 
